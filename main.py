@@ -1,20 +1,19 @@
 import json
 import xmltodict
+from gnucash_functions import make_account_list, make_transaction_list
 
 with open('crypto_test.gnucash', 'r') as gnucash_data:
     gnucash_data_dict = xmltodict.parse(gnucash_data.read())
 
 print(gnucash_data_dict['gnc-v2']['gnc:book']['gnc:transaction'])
+print(gnucash_data_dict['gnc-v2']['gnc:book']['gnc:account'])
+trans_account_id_list = []
 
-for transaction in gnucash_data_dict['gnc-v2']['gnc:book']['gnc:transaction']:
-    print(transaction)
-    print(transaction['trn:id'])
-    print(transaction['trn:currency'])
-    print(transaction['trn:date-posted'])
-    print(transaction['trn:date-entered'])
-    print(transaction['trn:description'])
-    print(transaction['trn:slots'])
-    print(transaction['trn:splits'])
+act_list = make_account_list(gnucash_data_dict)
+
+transaction_list = make_transaction_list(gnucash_data_dict, act_list)
+for trn in transaction_list:
+    print(trn)
 
 gnucash_json = json.dumps(gnucash_data_dict, indent=4)
 
