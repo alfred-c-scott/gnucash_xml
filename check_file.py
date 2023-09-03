@@ -12,7 +12,7 @@ ti_m = os.path.getmtime(path)
 # set to false in deployment
 from_terminal = False
 
-with open ('check_file.dat', 'r') as f:
+with open('check_file.dat', 'r') as f:
     lst_mod = f.readline()
     if from_terminal:
         print(lst_mod)

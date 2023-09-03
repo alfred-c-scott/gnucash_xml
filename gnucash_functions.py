@@ -1,4 +1,32 @@
-# gnucash_functions.py
+#!/usr/bin/python3
+
+
+import os
+import time
+import csv
+
+
+def xml_file_check(file_path):
+    ti_c = os.path.getctime(file_path)
+    ti_m = os.path.getmtime(file_path)
+
+    with open('check_file.dat', 'r') as f:
+        lst_mod = f.readline()
+        print(lst_mod)
+        print(str(ti_m))
+        if lst_mod != str(ti_m):
+            print('file changed')
+            with open('check_file.dat', 'w') as write_f:
+                write_f.write(str(ti_m))
+                write_f.write('')
+                write_f.close()
+            f.close()
+            return True
+        else:
+            print('file not changed')
+            f.close()
+            return False
+
 
 def make_account_list(gnucash_data):
     account_list = []
@@ -41,3 +69,17 @@ def make_transaction_list(gnucash_data, account_list):
         # print(trn_dict)
 
     return transaction_list
+
+
+def import_swan():
+    trn_list = []
+    with open('transfers-personal-FT72P9945347.csv', 'r') as csv_file:
+        csv_data = csv.DictReader(csv_file)
+        for row in csv_data:
+            trn_list.append(row)
+
+    return trn_list
+
+
+# def import_coinbase():
+#     pass
