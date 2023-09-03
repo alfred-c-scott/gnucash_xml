@@ -4,4 +4,5 @@
 /a_c_s.gnucash
 .idea
 .venv
-/transfers-personal-FT72P9945347.csv
+/private_csv
+/private_json

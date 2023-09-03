@@ -73,13 +73,28 @@ def make_transaction_list(gnucash_data, account_list):
 
 def import_swan():
     trn_list = []
-    with open('transfers-personal-FT72P9945347.csv', 'r') as csv_file:
-        csv_data = csv.DictReader(csv_file)
-        for row in csv_data:
+    with open('private_csv/transfers-personal-FT72P9945347.csv', 'r') as csv_file:
+        swn_data = csv.DictReader(csv_file)
+
+        for row in swn_data:
             trn_list.append(row)
 
     return trn_list
 
 
-# def import_coinbase():
-#     pass
+def import_coinbase():
+    trn_list = []
+    with open('private_csv/Coinbase-57e471d973edbf01338633d5-TransactionsHistoryReport-2023-09-03-16-04-34.csv',
+              'r') as csv_file:
+        csv_data = csv_file.readlines()
+        for ct, line in enumerate(csv_data):
+            if line[0:9] == 'Timestamp':
+                fields_line = ct
+
+    cb_data = csv_data[fields_line:ct]
+    cb_data = csv.DictReader(cb_data)
+
+    for line in cb_data:
+        trn_list.append(line)
+
+    return trn_list
