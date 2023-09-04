@@ -2,7 +2,7 @@
 
 
 import os
-import time
+from datetime import datetime
 import csv
 
 
@@ -91,10 +91,17 @@ def import_coinbase():
             if line[0:9] == 'Timestamp':
                 fields_line = ct
 
-    cb_data = csv_data[fields_line:ct]
-    cb_data = csv.DictReader(cb_data)
+        cb_data = csv_data[fields_line:ct]
+        cb_data = csv.DictReader(cb_data)
 
-    for line in cb_data:
-        trn_list.append(line)
+    for trn in cb_data:
+        # noinspection PyTypeChecker
+        datetime_obj = datetime.fromisoformat(trn["Timestamp"].replace("Z", "+00:00"))
+        epoch_time = datetime_obj.timestamp()
+        print(epoch_time)
+        print(type(epoch_time))
+        # noinspection PyTypeChecker
+        trn["Timestamp"] = int(epoch_time)
+        trn_list.append(trn)
 
     return trn_list

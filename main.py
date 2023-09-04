@@ -51,8 +51,7 @@ with open('private_json/cb.json', 'w') as json_file:
     json_file.close()
     
     
-payload = {}
-payload["gnucash_xml"] = gnucash_xml_dict["gnc-v2"]
+payload = {"gnucash_xml": gnucash_xml_dict["gnc-v2"]}
 print(payload["gnucash_xml"])
 payload["gnucash_act_list"] = act_dict["gnucash_accounts"]
 print(payload["gnucash_act_list"])
